@@ -1,122 +1,51 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from './assets/vite.svg'
-import heroImg from './assets/hero.png'
 import './App.css'
+import { NavLink, Route, Routes } from 'react-router-dom'
+import Activities from './components/Activities.jsx'
+import Leaderboard from './components/Leaderboard.jsx'
+import Teams from './components/Teams.jsx'
+import Users from './components/Users.jsx'
+import Workouts from './components/Workouts.jsx'
+
+const navigation = [
+  { label: 'Overview', to: '/' },
+  { label: 'Activities', to: '/activities' },
+  { label: 'Leaderboard', to: '/leaderboard' },
+  { label: 'Teams', to: '/teams' },
+  { label: 'Users', to: '/users' },
+  { label: 'Workouts', to: '/workouts' },
+]
 
 function App() {
-  const [count, setCount] = useState(0)
+  return <div className="app-shell">
+    <header className="app-header"><div className="container-fluid app-header-inner">
+      <NavLink className="brand" to="/"><span className="brand-mark">O</span><span>Octofit Tracker</span></NavLink>
+      <span className="status-pill"><span className="status-dot" /> Training desk</span>
+    </div></header>
+    <div className="container-fluid app-layout">
+      <aside className="sidebar"><p className="eyebrow">Workspace</p><nav className="nav flex-column" aria-label="Primary navigation">
+        {navigation.map((item) => <NavLink key={item.to} className="nav-link" to={item.to} end={item.to === '/'}>{item.label}</NavLink>)}
+      </nav></aside>
+      <main className="main-content"><Routes>
+        <Route path="/" element={<Overview />} />
+        <Route path="/activities" element={<Activities />} />
+        <Route path="/leaderboard" element={<Leaderboard />} />
+        <Route path="/teams" element={<Teams />} />
+        <Route path="/users" element={<Users />} />
+        <Route path="/workouts" element={<Workouts />} />
+      </Routes></main>
+    </div>
+  </div>
+}
 
-  return (
-    <>
-      <section id="center">
-        <div className="hero">
-          <img src={heroImg} className="base" width="170" height="179" alt="" />
-          <img src={reactLogo} className="framework" alt="React logo" />
-          <img src={viteLogo} className="vite" alt="Vite logo" />
-        </div>
-        <div>
-          <h1>Get started</h1>
-          <p>
-            Edit <code>src/App.jsx</code> and save to test <code>HMR</code>
-          </p>
-        </div>
-        <button
-          type="button"
-          className="counter"
-          onClick={() => setCount((count) => count + 1)}
-        >
-          Count is {count}
-        </button>
-      </section>
-
-      <div className="ticks"></div>
-
-      <section id="next-steps">
-        <div id="docs">
-          <svg className="icon" role="presentation" aria-hidden="true">
-            <use href="/icons.svg#documentation-icon"></use>
-          </svg>
-          <h2>Documentation</h2>
-          <p>Your questions, answered</p>
-          <ul>
-            <li>
-              <a href="https://vite.dev/" target="_blank">
-                <img className="logo" src={viteLogo} alt="" />
-                Explore Vite
-              </a>
-            </li>
-            <li>
-              <a href="https://react.dev/" target="_blank">
-                <img className="button-icon" src={reactLogo} alt="" />
-                Learn more
-              </a>
-            </li>
-          </ul>
-        </div>
-        <div id="social">
-          <svg className="icon" role="presentation" aria-hidden="true">
-            <use href="/icons.svg#social-icon"></use>
-          </svg>
-          <h2>Connect with us</h2>
-          <p>Join the Vite community</p>
-          <ul>
-            <li>
-              <a href="https://github.com/vitejs/vite" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#github-icon"></use>
-                </svg>
-                GitHub
-              </a>
-            </li>
-            <li>
-              <a href="https://chat.vite.dev/" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#discord-icon"></use>
-                </svg>
-                Discord
-              </a>
-            </li>
-            <li>
-              <a href="https://x.com/vite_js" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#x-icon"></use>
-                </svg>
-                X.com
-              </a>
-            </li>
-            <li>
-              <a href="https://bsky.app/profile/vite.dev" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#bluesky-icon"></use>
-                </svg>
-                Bluesky
-              </a>
-            </li>
-          </ul>
-        </div>
-      </section>
-
-      <div className="ticks"></div>
-      <section id="spacer"></section>
-    </>
-  )
+function Overview() {
+  return <>
+    <div className="page-heading"><p className="eyebrow">Today at a glance</p><h1>Move together. Go further.</h1><p className="lead">A clear view of your people, progress, and next best workout.</p></div>
+    <div className="overview-grid">
+      <NavLink className="overview-card overview-card-primary" to="/activities"><span className="card-kicker">Track</span><strong>Log an activity</strong><span>Keep momentum visible across the team.</span></NavLink>
+      <NavLink className="overview-card" to="/leaderboard"><span className="card-kicker">Compete</span><strong>Check the leaderboard</strong><span>See who is setting the pace this week.</span></NavLink>
+      <NavLink className="overview-card" to="/workouts"><span className="card-kicker">Plan</span><strong>Find a workout</strong><span>Choose a challenge that fits today.</span></NavLink>
+    </div>
+  </>
 }
 
 export default App
